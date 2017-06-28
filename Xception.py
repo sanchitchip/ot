@@ -1,3 +1,23 @@
+
+from keras.preprocessing import image
+
+from keras.models import Model
+from keras import layers
+from keras.layers import Dense
+from keras.layers import Input
+from keras.layers import BatchNormalization
+from keras.layers import Activation
+from keras.layers import Conv2D
+from keras.layers import SeparableConv2D
+from keras.layers import MaxPooling2D
+from keras.layers import GlobalAveragePooling2D
+from keras.layers import GlobalMaxPooling2D
+from keras.engine.topology import get_source_inputs
+from keras.utils.data_utils import get_file
+from keras import backend as K
+from keras.applications.imagenet_utils import decode_predictions
+from keras.applications.imagenet_utils import _obtain_input_shape
+
 from keras.datasets import cifar10
 (X_train, y_train), (X_test, y_test) = cifar10.load_data()
 X_train = X_train.astype('float32')
@@ -11,20 +31,12 @@ from keras.utils import np_utils
 y_train = np_utils.to_categorical(y_train)
 y_test = np_utils.to_categorical(y_test)
 
-##  define an input_img tensor for a 32x32 image with 3 channels(RGB).
-from keras.layers import Input
-input_img = Input(shape = (299, 299, 3))
-
-
-
-
 ## Determine proper input shape
 
 input_shape = _obtain_input_shape(input_shape,
 default_size=299,
 min_size=71,
-data_format=K.image_data_format(),
-include_top=include_top)
+data_format=K.image_data_format())
 
 img_input = Input(shape=input_shape)
 
